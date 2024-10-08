@@ -82,5 +82,6 @@ ggplot(PCB, aes(fill=ONTARIO, y=LENGTH_CM, x=SPECIES_NAME))+
 ggplot(GreatLakesPCB, aes(x=VALUE, y=WEIGHT_GRAM))+
   geom_point()+
   facet_wrap("SPECIES_NAME")
+#fish
 
 
