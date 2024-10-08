@@ -120,3 +120,4 @@ ggplot(LakeOntario, aes(x=SAMPLE_DATE, y=VALUE))+
 
 ggplot(LakeSuperior, aes(x=SAMPLE_DATE, y=VALUE))+
   geom_point()
+
