@@ -46,7 +46,8 @@ PCBno_out <- filter(PCB, VALUE<35000)
 
 ggplot(PCBno_out, aes(x=ONTARIO, y=VALUE)) +
   geom_jitter(alpha=0.1) +
-  ylab("PCB (ng/g wet)")
+  ylab("PCB (ng/g wet)") +
+  theme_minimal()
 
 FarNorthHg<-add_column(FarNorthHg, ONTARIO="North")
 SouthHg<-add_column(SouthHg, ONTARIO="South")
@@ -84,3 +85,38 @@ ggplot(GreatLakesPCB, aes(x=VALUE, y=WEIGHT_GRAM))+
   facet_wrap("SPECIES_NAME")
 
 
+Walleye <- filter(PCB, grepl("Walleye", SPECIES_NAME, fixed = TRUE))
+WalleyeN<- filter(Walleye, ONTARIO=="North")
+WalleyeS<- filter(Walleye, ONTARIO=="South")
+
+
+figure1<-ggplot(WalleyeS, aes(x=VALUE, y=WEIGHT_GRAM))+
+  geom_point()+
+  xlab("PCB (ng/g wet)")+
+  ylab("Weight (g)")+
+  geom_smooth(method = lm)
+
+figure2<-ggplot(WalleyeN, aes(x=VALUE, y=WEIGHT_GRAM))+
+  geom_point()+
+  xlab("PCB (ng/g wet)")+
+  ylab("Weight (g)")+
+  geom_smooth(method = lm)
+  
+library(gridExtra)
+grid.arrange(figure1, figure2)
+
+
+ggplot(LakeErie, aes(x=SAMPLE_DATE, y=VALUE))+
+  geom_point()
+
+ggplot(LakeHuron, aes(x=SAMPLE_DATE, y=VALUE))+
+  geom_point()
+
+ggplot(LakeMichigan, aes(x=SAMPLE_DATE, y=VALUE))+
+  geom_point()
+
+ggplot(LakeOntario, aes(x=SAMPLE_DATE, y=VALUE))+
+  geom_point()
+
+ggplot(LakeSuperior, aes(x=SAMPLE_DATE, y=VALUE))+
+  geom_point()
