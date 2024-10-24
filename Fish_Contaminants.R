@@ -42,7 +42,7 @@ PCB<-rbind(FarNorthPCB, SouthPCB)
 ggplot(PCB, aes(x=ONTARIO, y=VALUE)) +
   geom_jitter(alpha=0.5) 
 
-PCBno_out <- filter(PCB, VALUE<35000)
+PCBno_out <- filter(PCB, VALUE<10000)
 
 ggplot(PCBno_out, aes(x=ONTARIO, y=VALUE)) +
   geom_jitter(alpha=0.1) +
@@ -94,16 +94,51 @@ figure1<-ggplot(WalleyeS, aes(x=VALUE, y=WEIGHT_GRAM))+
   geom_point()+
   xlab("PCB (ng/g wet)")+
   ylab("Weight (g)")+
-  geom_smooth(method = lm)
+  geom_smooth(method = lm)+
+  annotate(geom="text", x=20, y=7800, label="South",size=8,family="serif")
+
 
 figure2<-ggplot(WalleyeN, aes(x=VALUE, y=WEIGHT_GRAM))+
   geom_point()+
   xlab("PCB (ng/g wet)")+
   ylab("Weight (g)")+
-  geom_smooth(method = lm)
+  geom_smooth(method = lm)+
+  annotate(geom="text", x=20, y=4500, label="North",size=8,family="serif")
+
   
 library(gridExtra)
 grid.arrange(figure1, figure2)
+
+
+figure3<-ggplot(SouthPCB, aes(x=VALUE, y=WEIGHT_GRAM))+
+  geom_point(alpha=0.1)+
+  xlab("PCB (ng/g wet)")+
+  ylab("Weight (g)")+
+  geom_smooth(method = lm)+
+  theme_minimal()+
+  annotate(geom="text", x=20, y=38000, label="South",size=8,family="serif")
+
+
+figure4<-ggplot(FarNorthPCB, aes(x=VALUE, y=WEIGHT_GRAM))+
+  geom_point(alpha=0.1)+
+  xlab("PCB (ng/g wet)")+
+  ylab("Weight (g)")+
+  geom_smooth(method = lm)+
+  theme_minimal()+
+  annotate(geom="text", x=10, y=20000, label="North",size=8,family="serif")
+
+
+
+figure5<-ggplot(GreatLakesPCB, aes(x=VALUE, y=WEIGHT_GRAM))+
+  geom_point(alpha=0.1)+
+  xlab("PCB (ng/g wet)")+
+  ylab("Weight (g)")+
+  geom_smooth(method = lm)+
+  theme_minimal()+
+  annotate(geom="text", x=10, y=20000, label="Great Lakes",size=8,family="serif")
+
+grid.arrange(figure5, figure4)
+
 
 
 ggplot(LakeErie, aes(x=SAMPLE_DATE, y=VALUE))+
@@ -121,3 +156,8 @@ ggplot(LakeOntario, aes(x=SAMPLE_DATE, y=VALUE))+
 ggplot(LakeSuperior, aes(x=SAMPLE_DATE, y=VALUE))+
   geom_point()
 
+unique(PCB$SPECIES_NAME)
+
+unique(Fish_Contaminant_Data_2005_2018$SPECIES_NAME)
+
+unique(Fish_Contaminant_Data_2005_2018$LOCATION_NAME)
