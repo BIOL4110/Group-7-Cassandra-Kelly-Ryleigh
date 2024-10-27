@@ -29,6 +29,7 @@ Fish_Contaminant_Data_2005_2018$REMARK_CODE<-NULL
 library(lubridate)
 install.packages("janitor")
 library(janitor)
+library(tidyverse)
 
 Fish_Contaminant_1 <- Fish_Contaminant_Data_1993_1998 %>% 
   clean_names() %>% 
