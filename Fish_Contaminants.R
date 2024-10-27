@@ -7,7 +7,7 @@ Fish_Contaminant_Data_2005_2018 %>%
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-  
+
 LakeErie <- filter(Fish_Contaminant_Data_2005_2018, grepl("Lake Erie", LOCATION_NAME, fixed = TRUE))
 LakeHuron <- filter(Fish_Contaminant_Data_2005_2018, grepl("Lake Huron", LOCATION_NAME, fixed = TRUE))
 LakeMichigan <- filter(Fish_Contaminant_Data_2005_2018, grepl("Lake Michigan", LOCATION_NAME, fixed = TRUE))
@@ -16,7 +16,7 @@ LakeSuperior <- filter(Fish_Contaminant_Data_2005_2018, grepl("Lake Superior", L
 GreatLakes <- filter(Fish_Contaminant_Data_2005_2018, grepl("Lake Erie", LOCATION_NAME, fixed = TRUE) | grepl("Lake Huron", LOCATION_NAME, fixed = TRUE) | grepl("Lake Michigan", LOCATION_NAME, fixed = TRUE) | grepl("Lake Ontario", LOCATION_NAME, fixed = TRUE) | grepl("Lake Superior", LOCATION_NAME, fixed = TRUE))
 
 
-FarNorth <- filter(Fish_Contaminant_Data_2005_2018, LATITUDE_DDMMSS>=500000)
+North <- filter(Fish_Contaminant_Data_2005_2018, LATITUDE_DDMMSS>=500000)
 South <- filter(Fish_Contaminant_Data_2005_2018, LATITUDE_DDMMSS<500000)
 
 FarNorthPCB <- filter(FarNorth, PARAMETER_NAME=="PCB; total")
@@ -141,7 +141,6 @@ figure5<-ggplot(GreatLakesPCB, aes(x=VALUE, y=WEIGHT_GRAM))+
 grid.arrange(figure5, figure4)
 
 
-
 ggplot(LakeErie, aes(x=SAMPLE_DATE, y=VALUE))+
   geom_point()
 
@@ -165,3 +164,4 @@ unique(Fish_Contaminant_Data_2005_2018$LOCATION_NAME)
 
 #Test
 #test2
+
