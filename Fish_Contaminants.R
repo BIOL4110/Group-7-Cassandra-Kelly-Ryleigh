@@ -1,3 +1,9 @@
+install.packages("tidyverse")
+install.packages("ggplot2")
+install.packages("rfishbase")
+library(rfishbase)
+
+
 Fish_Contaminant_Data_2005_2018 %>% 
   ggplot(aes(x=SAMPLE_DATE, y=VALUE, color=LOCATION_NAME)) + 
   geom_point(alpha=0.2) + 
@@ -165,3 +171,21 @@ unique(Fish_Contaminant_Data_2005_2018$LOCATION_NAME)
 #Test
 #test2
 
+<<<<<<< HEAD
+=======
+install.packages("rfishbase")
+library(rfishbase)
+fb_tables()
+
+trophic_fbase<- fb_tbl("diet")
+
+food_fish<-fb_tbl("food")
+fooditems<-fb_tbl("fooditems")
+
+foodecosystemtype<-
+86798
+
+
+
+
+>>>>>>> 206156c68f6663810d17b3824cb5421e00fb2837
