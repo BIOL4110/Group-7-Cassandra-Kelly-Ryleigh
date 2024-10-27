@@ -14,8 +14,10 @@ trophic_species <- merge(species_fbase,trophic_fbase, by  = "SpecCode")
 #now what?
 
 Trophic_avg <- trophic_species %>%
-  group_by(SpecCode, SampleStage) %>%
+  group_by(SpecCode, SampleStage, FBname) %>%
   summarize(TrophicAverage = mean(Troph, na.rm = TRUE), .groups = 'drop')
+
+
 
 
 #Maybe need to tidy the data? Perhaps it is best to just average the trophic levels for each species
