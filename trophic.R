@@ -22,3 +22,11 @@ Trophic_avg <- trophic_species %>%
 
 #Maybe need to tidy the data? Perhaps it is best to just average the trophic levels for each species
 #to make things simpler? (Done above)
+
+
+trophic_species<-na.omit(trophic_species)
+
+trophic_species$FBname<-tolower(trophic_species$FBname)
+
+fish_Hg_PCB$species_name<-tolower(fish_Hg_PCB$species_name)
+
