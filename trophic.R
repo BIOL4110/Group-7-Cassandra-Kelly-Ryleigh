@@ -12,4 +12,9 @@ species_fbase<-species_fbase %>% select("SpecCode","FBname")
 trophic_species <- merge(species_fbase,trophic_fbase, by  = "SpecCode") 
 
 #now what?
+Trophic_avg <- rowMeans(trophic_species, 7104])
+                        
+print(rowMeans)
 
+#Maybe need to tidy the data? Perhaps it is best to just average the trophic levels for each species
+#to make things simpler?
