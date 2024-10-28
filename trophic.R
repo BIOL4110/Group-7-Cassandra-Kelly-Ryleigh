@@ -24,3 +24,7 @@ fish_Hg_PCB$species_name<-tolower(fish_Hg_PCB$species_name)
 #filter for adult fish
 trophic_level<-filter(Trophic_avg, SampleStage=="adults")
 
+#merge contaminant dataset and trophic
+trophic_level<-trophic_level %>% rename(species_name=FBname)
+
+trophic_Hg_PCB<-merge(fish_Hg_PCB,trophic_level,by="species_name")
