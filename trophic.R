@@ -21,3 +21,6 @@ Trophic_avg$FBname<-tolower(Trophic_avg$FBname)
 
 fish_Hg_PCB$species_name<-tolower(fish_Hg_PCB$species_name)
 
+#filter for adult fish
+trophic_level<-filter(Trophic_avg, SampleStage=="adults")
+
