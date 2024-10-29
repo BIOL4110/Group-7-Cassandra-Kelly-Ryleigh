@@ -171,8 +171,6 @@ unique(Fish_Contaminant_Data_2005_2018$LOCATION_NAME)
 #Test
 #test2
 
-<<<<<<< HEAD
-=======
 install.packages("rfishbase")
 library(rfishbase)
 fb_tables()
@@ -188,4 +186,3 @@ foodecosystemtype<-
 
 
 
->>>>>>> 206156c68f6663810d17b3824cb5421e00fb2837
