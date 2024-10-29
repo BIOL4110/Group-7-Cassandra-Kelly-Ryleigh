@@ -33,3 +33,11 @@ trophic_genus2 <- trophic_genus %>%
 #adding trophic average to contaminants data
 fish_genus_troph<-merge(fish_genus,trophic_genus2,by="Genus")
 
+
+##DON'T RUN THIS YET, THIS IS JUST ME MESSING AROUND!
+#list of all fish in cleaned up contaminant dataset
+fish_list<-unique(fish_Hg_PCB$FBname)
+
+scientific_fish_list<-common_to_sci(c(fish_list))
+
+
