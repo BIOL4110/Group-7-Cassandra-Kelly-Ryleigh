@@ -59,6 +59,6 @@ South<-add_column(South, ONTARIO="South")
 #adding North South column into combined dataset
 fish_1993_2018<-rbind(North, South)
 
-
+Diet_table<- fb_tbl("diet")
 
 
