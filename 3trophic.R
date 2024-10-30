@@ -28,3 +28,29 @@ trophic_level<-filter(Trophic_avg, SampleStage=="adults")
 trophic_level<-trophic_level %>% rename(species_name=FBname)
 
 trophic_Hg_PCB<-merge(fish_Hg_PCB,trophic_level,by="species_name")
+
+
+#Unit conversion: PCB Nanograms to picograms to micrograms
+install.packages("measurements")
+library(measurements)
+
+Nano_to_pico <- Units %>%
+  mutate( = case_when(unit, 
+    Units == "Picogram per gram wet" ~ Units * 1000,
+    Units == "Nanogram"  ~ Units,
+    TRUE ~ NA_real_  # Handle unexpected units
+  ))
+
+# Convert all weights to grams
+
+unit_fix <- trophic_Hg_PCB %>%
+  mutate(value = case_when(
+    unit == ("NANOGRAM PER WET GRAM") ~ value * 1000,
+    unit == "PICOGRAM PER WET GRAM"  ~ value,
+    TRUE ~ NA_real_  # Handle unexpected units
+  )) 
+
+
+
+
+
