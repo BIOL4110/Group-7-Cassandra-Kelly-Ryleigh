@@ -41,15 +41,18 @@ Nano_to_pico <- Units %>%
     TRUE ~ NA_real_  # Handle unexpected units
   ))
 
-# Convert all weights to grams
+
+# Things to change: Nanogram, nanogram per wet gram, picogram per wet, ng/g wet 
+
 
 unit_fix <- trophic_Hg_PCB %>%
   mutate(value = case_when(
-    unit == ("NANOGRAM PER WET GRAM") ~ value * 1000,
-    unit == "PICOGRAM PER WET GRAM"  ~ value,
+    unit == ("NANOGRAM PER WET GRAM") ~ value,
+    unit == "PICOGRAM PER WET GRAM"  ~ value / 1000,
     TRUE ~ NA_real_  # Handle unexpected units
   )) 
 
+#not completed
 
 
 
