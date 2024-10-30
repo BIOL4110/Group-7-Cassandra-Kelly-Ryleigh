@@ -19,3 +19,5 @@ PCB %>% ggplot(aes(weight_gram,value))+
   geom_point()+
   geom_smooth()
 
+ggplot(fish_genus_troph, aes(x=ONTARIO, y=value)) +
+  geom_jitter(alpha=0.5)
