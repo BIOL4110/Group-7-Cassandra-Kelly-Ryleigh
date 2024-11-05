@@ -10,7 +10,13 @@ install.packages("lubridate")
 library(lubridate)
 install.packages("janitor")
 library(janitor)
+library(readxl)
 
+#import contaminant data
+Fish_Contaminant_Data_1993_1998 <- read_excel("Fish Contaminant Data 1993-1998.xlsx")
+Fish_Contaminant_Data_1999_2001 <- read_excel("Fish Contaminant Data 1999-2001.xlsx")
+Fish_Contaminant_Data_2002_2004 <- read_excel("Fish Contaminant Data 2002-2004.xlsx")
+Fish_Contaminant_Data_2005_2018 <- read_excel("Fish Contaminant Data 2005-2018.xlsx")
 
 #remove remark columns----
 Fish_Contaminant_Data_1993_1998$REMARK1<-NULL
@@ -54,8 +60,8 @@ fish_1993_2018<-rbind(Fish_Contaminant_1,Fish_Contaminant_2,Fish_Contaminant_3,F
 #adding in North South designation----
 North <- filter(fish_1993_2018, latitude_ddmmss>=490000)
 South <- filter(fish_1993_2018, latitude_ddmmss<490000)
-North<-add_column(North, ONTARIO="North")
-South<-add_column(South, ONTARIO="South")
+North<-add_column(North, ontario="North")
+South<-add_column(South, ontario="South")
 
 #adding North South column into combined dataset
 fish_1993_2018<-rbind(North, South)
@@ -87,12 +93,22 @@ PCB<-PCB %>%
 PCB$unit<-NULL
 #add correct unit
 PCB<-add_column(PCB, unit="ng/g wet")
+#remove different types of PCB
+PCB$parameter_name<-NULL
+#add PCB as parameter
+PCB<-add_column(PCB, parameter_name="PCB")
 
 #combine Hg and PCB data
 fish_Hg_PCB<-rbind(PCB, Hg)
 
 #remove non-fish samples----
 fish_Hg_PCB<-filter(fish_Hg_PCB, portion_type_desc!="NOT FISH SPECIES  OTHER ANIMAL")
+
+#rename species_name to FBname
+fish_Hg_PCB<-fish_Hg_PCB %>% rename(FBname=species_name)
+
+#make common names lower case
+fish_Hg_PCB$FBname<-tolower(fish_Hg_PCB$FBname)
 
 #rename "wild-caught" data common names----
 fish_Hg_PCB <- fish_Hg_PCB %>% 
@@ -119,7 +135,6 @@ fish_Hg_PCB <- fish_Hg_PCB %>%
 fish_Hg_PCB <- fish_Hg_PCB %>% 
   mutate(FBname = str_replace_all(FBname, "aurora trout", "brook trout"))
 
-
 #load fishbase tables----
 species_1<-fb_tbl("species")
 trophic_1<-fb_tbl("diet")
@@ -140,11 +155,8 @@ trophic_1<-filter(trophic_1, grepl("adult", SampleStage, fixed = TRUE))
 #add genus (and species) to trophic_2
 trophic_genus<-merge(trophic_1,species_1,by="Speccode")
 
-#rename species_name to FBname
-fish_Hg_PCB<-fish_Hg_PCB %>% rename(FBname=species_name)
-
 #add genus (and species) to contaminant data
-fish_Hg_PCB<-merge(fish_Hg_PCB,species_1,by="FBname")
+fish_genus<-merge(fish_Hg_PCB,species_1,by="FBname")
 
 #averaging duplicate trophic levels
 trophic_genus <- trophic_genus %>%
@@ -152,16 +164,7 @@ trophic_genus <- trophic_genus %>%
   summarize(TrophicAverage = mean(Troph, na.rm = TRUE), .groups = 'drop')
 
 #adding trophic average to contaminants data
-fish_Hg_PCB<-merge(fish_Hg_PCB,trophic_genus,by="Genus")
+fish_genus<-merge(fish_genus,trophic_genus,by="Genus")
 
-#have separate datasets for Hg and PCB with trophic info added----
-PCB <- filter(fish_Hg_PCB, grepl("chlorobiphenyl", parameter_name, fixed = TRUE) | 
-                grepl("PCB", parameter_name, fixed = TRUE) | 
-                grepl("(Cl)biphenyl", parameter_name, fixed = TRUE))
-Hg<-filter(fish_Hg_PCB, grepl("Mercury", parameter_name, fixed = TRUE))
 
-#remove different types of PCB
-PCB$parameter_name<-NULL
-#add PCB as parameter
-PCB<-add_column(PCB, parameter_name="PCB")
 
