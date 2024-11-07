@@ -172,5 +172,8 @@ PCB <- filter(fish_genus, grepl("chlorobiphenyl", parameter_name, fixed = TRUE) 
                 grepl("(Cl)biphenyl", parameter_name, fixed = TRUE))
 Hg<-filter(fish_genus, grepl("Mercury", parameter_name, fixed = TRUE))
 
-
+#fishbase get depth info----
+depth<-species_2 %>% select("SpecCode","DemersPelag")
+depth<-depth %>% rename(Speccode=SpecCode)
+fish_depth<-merge(fish_genus,depth,by="Speccode")
 
