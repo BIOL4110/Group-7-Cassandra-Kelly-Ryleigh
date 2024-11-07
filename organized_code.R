@@ -166,5 +166,11 @@ trophic_genus <- trophic_genus %>%
 #adding trophic average to contaminants data
 fish_genus<-merge(fish_genus,trophic_genus,by="Genus")
 
+#adding trophic average to Hg and PCB
+PCB <- filter(fish_genus, grepl("chlorobiphenyl", parameter_name, fixed = TRUE) | 
+                grepl("PCB", parameter_name, fixed = TRUE) | 
+                grepl("(Cl)biphenyl", parameter_name, fixed = TRUE))
+Hg<-filter(fish_genus, grepl("Mercury", parameter_name, fixed = TRUE))
+
 
 
