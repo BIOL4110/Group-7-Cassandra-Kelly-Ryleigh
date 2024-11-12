@@ -152,28 +152,40 @@ species_1<-species_1 %>% rename(Speccode=SpecCode)
 #filter to only adult and juv/adult trophic levels
 trophic_1<-filter(trophic_1, grepl("adult", SampleStage, fixed = TRUE))
 
-#add genus (and species) to trophic_2
-trophic_genus<-merge(trophic_1,species_1,by="Speccode")
+#average trophic position by Speccode
+trophic_2 <- trophic_1 %>%
+  group_by(Speccode) %>%
+  summarize(trophavg = mean(Troph, na.rm = TRUE), .groups = 'drop')
 
-#add genus (and species) to contaminant data
+#add genus, species and Speccode to contaminant data
 fish_genus<-merge(fish_Hg_PCB,species_1,by="FBname")
 
-#averaging duplicate trophic levels
-trophic_genus <- trophic_genus %>%
-  group_by(Genus) %>%
-  summarize(TrophicAverage = mean(Troph, na.rm = TRUE), .groups = 'drop')
+#add trophavg to contaminant data
+fish_troph<-merge(fish_genus,trophic_2,by="Speccode")
 
-#adding trophic average to contaminants data
-fish_genus<-merge(fish_genus,trophic_genus,by="Genus")
-
-#adding trophic average to Hg and PCB
-PCB <- filter(fish_genus, grepl("chlorobiphenyl", parameter_name, fixed = TRUE) | 
-                grepl("PCB", parameter_name, fixed = TRUE) | 
-                grepl("(Cl)biphenyl", parameter_name, fixed = TRUE))
-Hg<-filter(fish_genus, grepl("Mercury", parameter_name, fixed = TRUE))
 
 #fishbase get depth info----
+species_2<-fb_tbl("species")
 depth<-species_2 %>% select("SpecCode","DemersPelag")
 depth<-depth %>% rename(Speccode=SpecCode)
-fish_depth<-merge(fish_genus,depth,by="Speccode")
+fish_T_D<-merge(fish_troph,depth,by="Speccode")
+
+#age max----
+popchar2<-popchar %>% select("Speccode","tmax")
+
+popchar2<-na.omit(popchar2)
+popchar3 <- popchar2 %>%
+  group_by(Speccode) %>%
+  summarize(lifespan = max(tmax, na.rm = TRUE), .groups = 'drop')
+
+#add age max to fish contaminant data
+fish_TDL<-merge(fish_T_D,popchar3,by="Speccode")
+
+
+#adding trophic average, depth, and lifespan to Hg and PCB----
+PCB <- filter(fish_TDL, grepl("chlorobiphenyl", parameter_name, fixed = TRUE) | 
+                grepl("PCB", parameter_name, fixed = TRUE) | 
+                grepl("(Cl)biphenyl", parameter_name, fixed = TRUE))
+Hg<-filter(fish_TDL, grepl("Mercury", parameter_name, fixed = TRUE))
+
 
