@@ -181,6 +181,11 @@ popchar3 <- popchar2 %>%
 #add age max to fish contaminant data
 fish_TDL<-merge(fish_T_D,popchar3,by="Speccode")
 
+#removing more unnecessary columns
+fish_TDL$submission_no<-NULL
+fish_TDL$species_code<-NULL
+fish_TDL$TrophicAverage<-NULL
+
 
 #adding trophic average, depth, and lifespan to Hg and PCB----
 PCB <- filter(fish_TDL, grepl("chlorobiphenyl", parameter_name, fixed = TRUE) | 

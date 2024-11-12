@@ -54,6 +54,23 @@ PCB %>% ggplot(aes(trophavg,value))+
   theme(panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
+Hg %>% ggplot(aes(sex,value))+
+  geom_jitter(alpha=0.1)+
+  ylab("Mercury (ug/g wet)")+
+  xlab("Sex")+
+  theme_bw()+
+  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+PCB %>% ggplot(aes(sex,value))+
+  geom_jitter(alpha=0.1)+
+  ylab("PCB (ng/g wet)")+
+  xlab("Sex")+
+  theme_bw()+
+  theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
 
 Hg %>% ggplot(aes(lifespan,value))+
   geom_jitter(alpha=0.1)+
