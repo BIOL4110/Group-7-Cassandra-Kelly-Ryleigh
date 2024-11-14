@@ -171,6 +171,7 @@ depth<-depth %>% rename(Speccode=SpecCode)
 fish_T_D<-merge(fish_troph,depth,by="Speccode")
 
 #age max----
+popchar<-fb_tbl("popchar")
 popchar2<-popchar %>% select("Speccode","tmax")
 
 popchar2<-na.omit(popchar2)
