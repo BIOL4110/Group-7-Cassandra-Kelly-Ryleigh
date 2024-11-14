@@ -39,21 +39,22 @@ Hg2<-filter(fish_TDL2, grepl("Mercury", parameter_name, fixed = TRUE))
 
 install.packages("dharma")
 
+
 #qqplot
-qqnorm(Hg2$log_value)+
+qqnorm(Hg2$value)
   qqline()
 
 PCB2<-filter(PCB2,value>0)
 
-qqnorm(PCB2$log_value)
+qqnorm(PCB2$value)
 
 #linear regression models PCB
-model1a<-lm(value~trophavg, data=PCB)
-model2a<-lm(value~DemersPelag, data=PCB)
-model3a<-lm(value~lifespan, data=PCB)
-model4a<-lm(value~DemersPelag+lifespan, data=PCB)
-model5a<-lm(value~trophavg+DemersPelag, data=PCB)
-model6a<-lm(value~trophavg+DemersPelag+lifespan, data=PCB)
+model1a<-lm(log_value~trophavg, data=PCB2)
+model2a<-lm(log_value~DemersPelag, data=PCB2)
+model3a<-lm(log_value~lifespan, data=PCB2)
+model4a<-lm(log_value~DemersPelag+lifespan, data=PCB2)
+model5a<-lm(log_value~trophavg+DemersPelag, data=PCB2)
+model6a<-lm(log_value~trophavg+DemersPelag+lifespan, data=PCB2)
 
 #calculate AIC
 AIC(model1a, model2a, model3a, model4a, model5a, model6a)
