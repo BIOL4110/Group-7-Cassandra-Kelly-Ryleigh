@@ -31,6 +31,19 @@ popchar3 <- popchar2 %>%
 #add age max to fish contaminant data
 fish_TDL<-merge(fish_T_D,popchar3,by="Speccode")
 
+#log transform data for normal dist
+fish_TDL2<-fish_TDL %>% 
+  mutate(log_value = log(value))
+PCB2 <- filter(fish_TDL2, grepl("PCB", parameter_name, fixed = TRUE))
+Hg2<-filter(fish_TDL2, grepl("Mercury", parameter_name, fixed = TRUE))
+
+
+#qqplot
+qqnorm(Hg2$log_value)
+
+PCB2<-filter(PCB2,value>0)
+
+qqnorm(PCB2$log_value)
 
 #linear regression models PCB
 model1a<-lm(value~trophavg, data=PCB)
