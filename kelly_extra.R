@@ -69,6 +69,12 @@ fish_TDL<-fish_TDL %>%
 
 
 #playing with graphs
+
+ggplot(PCB, aes(group=trophic_level, value))+
+geom_boxplot()+
+  coord_flip()
+
+
 Hg %>% ggplot(aes(trophavg,value))+
   geom_jitter(alpha=0.1)+
   ylab("Mercury (ug/g wet)")+
