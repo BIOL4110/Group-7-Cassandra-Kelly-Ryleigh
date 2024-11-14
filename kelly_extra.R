@@ -37,9 +37,11 @@ fish_TDL2<-fish_TDL %>%
 PCB2 <- filter(fish_TDL2, grepl("PCB", parameter_name, fixed = TRUE))
 Hg2<-filter(fish_TDL2, grepl("Mercury", parameter_name, fixed = TRUE))
 
+install.packages("dharma")
 
 #qqplot
-qqnorm(Hg2$log_value)
+qqnorm(Hg2$log_value)+
+  qqline()
 
 PCB2<-filter(PCB2,value>0)
 
