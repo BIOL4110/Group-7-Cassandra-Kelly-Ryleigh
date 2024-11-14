@@ -32,6 +32,35 @@ popchar3 <- popchar2 %>%
 fish_TDL<-merge(fish_T_D,popchar3,by="Speccode")
 
 
+#linear regression models PCB
+model1a<-lm(value~trophavg, data=PCB)
+model2a<-lm(value~DemersPelag, data=PCB)
+model3a<-lm(value~lifespan, data=PCB)
+model4a<-lm(value~DemersPelag+lifespan, data=PCB)
+model5a<-lm(value~trophavg+DemersPelag, data=PCB)
+model6a<-lm(value~trophavg+DemersPelag+lifespan, data=PCB)
+
+#calculate AIC
+AIC(model1a, model2a, model3a, model4a, model5a, model6a)
+
+#linear regression models Hg
+model1b<-lm(value~trophavg, data=Hg)
+model2b<-lm(value~DemersPelag, data=Hg)
+model3b<-lm(value~lifespan, data=Hg)
+model4b<-lm(value~DemersPelag+lifespan, data=Hg)
+model5b<-lm(value~trophavg+DemersPelag, data=Hg)
+model6b<-lm(value~trophavg+DemersPelag+lifespan, data=Hg)
+
+#calculate AIC
+AIC(model1b, model2b, model3b, model4b, model5b, model6b)
+
+#qqplot
+qqnorm(Hg$value)
+qqnorm(PCB$value)
+
+
+
+
 
 
 
