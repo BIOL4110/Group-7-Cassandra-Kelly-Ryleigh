@@ -195,3 +195,6 @@ PCB <- filter(fish_TDL, grepl("chlorobiphenyl", parameter_name, fixed = TRUE) |
 Hg<-filter(fish_TDL, grepl("Mercury", parameter_name, fixed = TRUE))
 
 
+#trophic level bins
+fish_TDL<-fish_TDL %>% 
+  mutate(trophic_level = floor(trophavg))

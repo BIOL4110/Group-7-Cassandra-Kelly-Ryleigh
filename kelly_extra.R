@@ -59,7 +59,9 @@ qqnorm(Hg$value)
 qqnorm(PCB$value)
 
 
-
+#trophic level bins
+fish_TDL<-fish_TDL %>% 
+  mutate(trophic_level = floor(trophavg))
 
 
 
