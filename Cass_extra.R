@@ -75,5 +75,29 @@ Hg2_P3
 
 kruskal.test(data = Hg2, value ~ DemersPelag)
 
+#Hypothesis 2
+#Prediction 1:
+#PCB
+PCB_P4 <- ggplot(PCB2, aes(sample_date, value)) +
+  geom_smooth(method='lm') +
+theme_bw()
+#add labs
+PCB_P4
+
+#Test
+PCB_model<-lm(value ~ sample_date, data = PCB2)
+summary(PCB_model)
+
+  
+#Mercury 
+Hg_P4 <- ggplot(Hg2, aes(sample_date, value)) +
+  geom_smooth(method='lm') +
+  theme_bw()
+Hg_P4
+  
+Hg_model <- lm(value ~ sample_date, data = Hg2)
+summary(Hg_model)
+
+
 
 
