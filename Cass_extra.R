@@ -48,7 +48,7 @@ qqline()
 qqnorm(Hg2$log_value)
 qqline()
 
-
+Hg2
 #PCB
 PCB2<-filter(PCB2,value>0)
 
@@ -67,7 +67,6 @@ qqnorm(Hg2$year)
 qqline()
 
 #Not normally distributed
-
 
 
 ##Hypothesis 1
@@ -94,7 +93,7 @@ Hg_P1
 kruskal.test(data = PCB2, value ~ trophavg)
 #significant results
 #OR
-PCB_P1model<- lm(value ~ trophavg, data = PCB2)
+PCB_P1model<- lm(log_value ~ trophavg, data = PCB2)
 summary(PCB_H1model)
 #Insignificant
 
