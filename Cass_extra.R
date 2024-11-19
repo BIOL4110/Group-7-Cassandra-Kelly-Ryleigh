@@ -1,9 +1,19 @@
 library(ggplot2)
 
+Normal distributed/log stuff (from Kelly)
+#log transform data for normal dist
+fish_TDL2<-fish_TDL %>% 
+  mutate(log_value = log(value))
+PCB2 <- filter(fish_TDL2, grepl("PCB", parameter_name, fixed = TRUE))
+Hg2<-filter(fish_TDL2, grepl("Mercury", parameter_name, fixed = TRUE))
+
+install.packages("dharma")
+
 #New column for year to make sure it is seperate
 
 #done with fish_TDL2 to get log transformed data
 #New column for year (seperate from just date)
+
 fish_TDL2<-fish_TDL2 %>%
   mutate(fish_TDL2, year(sample_date))
 
@@ -24,20 +34,6 @@ Hg2 <- Hg2 %>%
 Hg2 <- Hg2 %>%
   rename("year" = "year(sample_date)")
 
-
-
-
-
-
-
-Normal distributed/log stuff (from Kelly)
-#log transform data for normal dist
-fish_TDL2<-fish_TDL %>% 
-  mutate(log_value = log(value))
-PCB2 <- filter(fish_TDL2, grepl("PCB", parameter_name, fixed = TRUE))
-Hg2<-filter(fish_TDL2, grepl("Mercury", parameter_name, fixed = TRUE))
-
-install.packages("dharma")
 
 
 #qqplot
@@ -66,7 +62,6 @@ qqline()
 qqnorm(Hg2$year)
 qqline()
 
-#Not normally distributed
 
 
 ##Hypothesis 1
