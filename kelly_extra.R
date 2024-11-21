@@ -41,12 +41,13 @@ install.packages("dharma")
 
 
 #qqplot
-qqnorm(Hg2$value)
-  qqline()
+qqnorm(Hg2$log_value)
+  qqline(Hg2$log_value)
 
-PCB2<-filter(PCB2,value>0)
+PCB2<-PCB2 %>% mutate(value=ifelse(value==0,0.00000001,value))
 
-qqnorm(PCB2$value)
+qqnorm(PCB2$log_value)
+qqline(PCB2$log_value)
 
 #linear regression models PCB
 model1a<-lm(log_value~trophavg, data=PCB2)
@@ -55,9 +56,24 @@ model3a<-lm(log_value~lifespan, data=PCB2)
 model4a<-lm(log_value~DemersPelag+lifespan, data=PCB2)
 model5a<-lm(log_value~trophavg+DemersPelag, data=PCB2)
 model6a<-lm(log_value~trophavg+DemersPelag+lifespan, data=PCB2)
+model7a<-lm(log_value~trophavg+DemersPelag+year, data=PCB2)
+
+
+model7b<-lm(log_value~trophavg+DemersPelag+lifespan+year, data=Hg2)
+
+
+#checking model assumptions
+library(performance)
+check_model(model6a)
+check_normality(model6a, plot=TRUE)
+plot(model6a)
 
 #calculate AIC
 AIC(model1a, model2a, model3a, model4a, model5a, model6a)
+
+#dredge na.action="na.fail" ----
+install.packages("MuMIn")
+
 
 #linear regression models Hg
 model1b<-lm(value~trophavg, data=Hg)
