@@ -34,7 +34,7 @@ Hg2 <- Hg2 %>%
 Hg2 <- Hg2 %>%
   rename("year" = "year(sample_date)")
 
-
+write_csv(Hg2, "cassandralounsbery\github\Lounsbery_Cassandra")
 
 #qqplot
 #Hg
