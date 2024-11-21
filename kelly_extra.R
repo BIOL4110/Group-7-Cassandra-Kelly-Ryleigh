@@ -49,6 +49,9 @@ PCB2<-PCB2 %>% mutate(value=ifelse(value==0,0.00000001,value))
 qqnorm(PCB2$log_value)
 qqline(PCB2$log_value)
 
+PCB2$`ifelse(value == 0, 1e-08, value)`<-NULL
+PCB2$year<-NULL
+
 #linear regression models PCB
 model1a<-lm(log_value~trophavg, data=PCB2)
 model2a<-lm(log_value~DemersPelag, data=PCB2)
