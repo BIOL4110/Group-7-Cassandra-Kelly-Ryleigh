@@ -216,3 +216,9 @@ summary()
 
 plot_cme()
 
+
+
+##Useful links
+#https://www.rdocumentation.org/packages/marginaleffects/versions/0.7.0
+#https://www.sscc.wisc.edu/sscc/pubs/Rmisc/margins.html
+
