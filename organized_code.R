@@ -205,14 +205,26 @@ PCB <- filter(fish_TDL, grepl("PCB", parameter_name, fixed = TRUE))
 Hg<-filter(fish_TDL, grepl("Mercury", parameter_name, fixed = TRUE))
 
 #prep data for log transformation
-fish_TDL<-fish_TDL %>% mutate(value 
+fish_TDL<-fish_TDL %>% mutate(ifelse(value=="0","0.000001",value))
+fish_TDL$value<-NULL
+fish_TDL<-fish_TDL %>% rename(value=`ifelse(value == "0", "0.000001", value)`)
+fish_TDL<-fish_TDL %>% transform(value=as.numeric(value))
 
 #log transform data
 fish_TDL2<-fish_TDL %>% 
   mutate(log_value = log(value))
+
+#year column added
+fish_TDL2<-fish_TDL2 %>%
+  mutate(fish_TDL2, year(sample_date))
+fish_TDL2<- fish_TDL2 %>% 
+  rename("year" = "year(sample_date)")
+
+#year and log in new contaminant sets
 PCB2 <- filter(fish_TDL2, grepl("PCB", parameter_name, fixed = TRUE))
 Hg2<-filter(fish_TDL2, grepl("Mercury", parameter_name, fixed = TRUE))
 
+#model fitting
 
 
 
