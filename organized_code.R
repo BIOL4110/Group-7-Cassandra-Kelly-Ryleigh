@@ -57,15 +57,6 @@ Fish_Contaminant_4 <- Fish_Contaminant_Data_2005_2018 %>%
 #combine datasets----
 fish_1993_2018<-rbind(Fish_Contaminant_1,Fish_Contaminant_2,Fish_Contaminant_3,Fish_Contaminant_4)
 
-#adding in North South designation----
-North <- filter(fish_1993_2018, latitude_ddmmss>=490000)
-South <- filter(fish_1993_2018, latitude_ddmmss<490000)
-North<-add_column(North, ontario="North")
-South<-add_column(South, ontario="South")
-
-#adding North South column into combined dataset
-fish_1993_2018<-rbind(North, South)
-
 #remove unnecessary columns and NAs
 fish_1993_2018$waterbody_code<-NULL
 fish_1993_2018$location_description<-NULL
@@ -76,6 +67,15 @@ fish_1993_2018$portion_type_code<-NULL
 fish_1993_2018$test_code<-NULL
 
 fish_1993_2018<-na.omit(fish_1993_2018)
+
+#REMOVE? adding in North South designation----
+North <- filter(fish_1993_2018, latitude_ddmmss>=490000)
+South <- filter(fish_1993_2018, latitude_ddmmss<490000)
+North<-add_column(North, ontario="North")
+South<-add_column(South, ontario="South")
+
+#adding North South column into combined dataset
+fish_1993_2018<-rbind(North, South)
 
 #keep only Hg and PCB data----
 PCB <- filter(fish_1993_2018, grepl("chlorobiphenyl", parameter_name, fixed = TRUE) | 
@@ -200,16 +200,9 @@ fish_TDL$submission_no<-NULL
 fish_TDL$species_code<-NULL
 fish_TDL$TrophicAverage<-NULL
 
-#trophic level bins REMOVE?----
-fish_TDL<-fish_TDL %>% 
-  mutate(trophic_level = floor(trophavg))
-
 #adding trophic average, trophic level, depth, and lifespan to Hg and PCB----
 PCB <- filter(fish_TDL, grepl("PCB", parameter_name, fixed = TRUE))
 Hg<-filter(fish_TDL, grepl("Mercury", parameter_name, fixed = TRUE))
-
-##REMOVE??----
-order <- (fish_T_D, benthopelagic == 4, pelagic-oceanic == 1, pelagic == 2, pelagic-neritic == 3, demersal == 5)
 
 #prep data for log transformation
 fish_TDL<-fish_TDL %>% mutate(value 
