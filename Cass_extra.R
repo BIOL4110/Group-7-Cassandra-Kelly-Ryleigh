@@ -34,7 +34,6 @@ Hg2 <- Hg2 %>%
 Hg2 <- Hg2 %>%
   rename("year" = "year(sample_date)")
 
-write_csv(Hg2, "cassandralounsbery\github\Lounsbery_Cassandra")
 
 #qqplot
 #Hg
@@ -195,5 +194,25 @@ Hg_model <- lm(value ~ year, data = Hg2)
 summary(Hg_model)
 
 
+##Marginal effects
 
+#install.packages
+install.packages("marginaleffects")
+library("marginaleffects")
+
+#Create linear model
+
+mod1<-lm(value~trophavg, data=Hg)
+
+predictions(mod1)
+
+datagrid(newdata = mod1)
+
+plot_cap()
+
+marginaleffects() # slope for each row of the original data 
+
+summary()
+
+plot_cme()
 
