@@ -169,6 +169,7 @@ species_2<-fb_tbl("species")
 depth<-species_2 %>% select("SpecCode","DemersPelag")
 depth<-depth %>% rename(Speccode=SpecCode)
 
+##REMOVE?----
 depth_rank <- depth %>%
   mutate(Rank = case_when(
     DemersPelag == "benthopelagic" ~ 4,
@@ -199,7 +200,7 @@ fish_TDL$submission_no<-NULL
 fish_TDL$species_code<-NULL
 fish_TDL$TrophicAverage<-NULL
 
-#trophic level bins
+#trophic level bins REMOVE?----
 fish_TDL<-fish_TDL %>% 
   mutate(trophic_level = floor(trophavg))
 
@@ -207,8 +208,17 @@ fish_TDL<-fish_TDL %>%
 PCB <- filter(fish_TDL, grepl("PCB", parameter_name, fixed = TRUE))
 Hg<-filter(fish_TDL, grepl("Mercury", parameter_name, fixed = TRUE))
 
+##REMOVE??----
 order <- (fish_T_D, benthopelagic == 4, pelagic-oceanic == 1, pelagic == 2, pelagic-neritic == 3, demersal == 5)
 
+#prep data for log transformation
+fish_TDL<-fish_TDL %>% mutate(value 
+
+#log transform data
+fish_TDL2<-fish_TDL %>% 
+  mutate(log_value = log(value))
+PCB2 <- filter(fish_TDL2, grepl("PCB", parameter_name, fixed = TRUE))
+Hg2<-filter(fish_TDL2, grepl("Mercury", parameter_name, fixed = TRUE))
 
 
 

@@ -67,9 +67,9 @@ model7b<-lm(log_value~trophavg+DemersPelag+lifespan+year, data=Hg2)
 
 #checking model assumptions
 library(performance)
-check_model(model6a)
-check_normality(model6a, plot=TRUE)
-plot(model6a)
+check_model(model7b)
+check_normality(model7b, plot=TRUE)
+plot(model7b)
 
 #calculate AIC
 AIC(model1a, model2a, model3a, model4a, model5a, model6a)
