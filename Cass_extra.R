@@ -206,15 +206,15 @@ mod1<-lm(value~trophavg, data=Hg)
 
 predictions(mod1)
 
-datagrid(newdata = mod1)
-
 plot_cap()
 
-marginaleffects() # slope for each row of the original data 
+marginaleffects(mod1) # slope for each row of the original data 
 
-summary()
+summary(mod1) #Average marginal effect
 
-plot_cme()
+plot_cme() #Conditional marginal effects
+
+marginalmeans()
 
 
 
