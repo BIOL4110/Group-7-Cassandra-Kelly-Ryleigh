@@ -224,8 +224,26 @@ fish_TDL2<- fish_TDL2 %>%
 PCB2 <- filter(fish_TDL2, grepl("PCB", parameter_name, fixed = TRUE))
 Hg2<-filter(fish_TDL2, grepl("Mercury", parameter_name, fixed = TRUE))
 
-#model fitting
+#model fitting PCB
+model7a<-lm(log_value~trophavg+DemersPelag+lifespan+year, data=PCB2, na.action="na.fail")
+#model Hg
+model7b<-lm(log_value~trophavg+DemersPelag+lifespan+year, data=Hg2, na.action="na.fail")
 
+#dredge confirm best lm ----
+install.packages("MuMIn")
+library(MuMIn)
+dredge(model7a)
+dredge(model7b)
 
+#checking model assumptions Hg
+install.packages("performance")
+library(performance)
+check_model(model7b)
+plot(model7b)
+summary(model7b)
 
+#checking model assumptions PCB
+check_model(model7a)
+plot(model7a)
+summary(model7a)
 

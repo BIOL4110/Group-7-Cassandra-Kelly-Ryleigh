@@ -59,23 +59,36 @@ model3a<-lm(log_value~lifespan, data=PCB2)
 model4a<-lm(log_value~DemersPelag+lifespan, data=PCB2)
 model5a<-lm(log_value~trophavg+DemersPelag, data=PCB2)
 model6a<-lm(log_value~trophavg+DemersPelag+lifespan, data=PCB2)
-model7a<-lm(log_value~trophavg+DemersPelag+year, data=PCB2)
+model7a<-lm(log_value~trophavg+DemersPelag+lifespan+year, data=PCB2, na.action="na.fail")
 
 
-model7b<-lm(log_value~trophavg+DemersPelag+lifespan+year, data=Hg2)
+model7b<-lm(log_value~trophavg+DemersPelag+lifespan+year, data=Hg2, na.action="na.fail")
 
 
-#checking model assumptions
+#checking model assumptions Hg
 library(performance)
 check_model(model7b)
 check_normality(model7b, plot=TRUE)
 plot(model7b)
+summary(model7b)
+
+
+#checking model assumptions PCB
+check_model(model7a)
+check_normality(model7a, plot=TRUE)
+plot(model7a)
+summary(model7a)
+
+
 
 #calculate AIC
 AIC(model1a, model2a, model3a, model4a, model5a, model6a)
 
 #dredge na.action="na.fail" ----
 install.packages("MuMIn")
+library(MuMIn)
+dredge(model7a)
+dredge(model7b)
 
 
 #linear regression models Hg
@@ -99,8 +112,10 @@ fish_TDL<-fish_TDL %>%
   mutate(trophic_level = floor(trophavg))
 
 
-
-
+Hg2 %>% ggplot(aes(x=log_value))+
+  geom_histogram()
+PCB2 %>% ggplot(aes(x=log_value))+
+  geom_histogram()
 
 
 #playing with graphs
