@@ -280,5 +280,9 @@ scale_model7b<-lm(log_value~scaled_trophavg+DemersPelag+scaled_lifespan+scaled_y
 summary(scale_model7a)
 summary(scale_model7b)
 
-
+#visualize models
+install.packages("visreg")
+library(visreg)
+visreg(model7a)
+visreg(model7b)
 
