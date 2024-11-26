@@ -247,3 +247,16 @@ check_model(model7a)
 plot(model7a)
 summary(model7a)
 
+##Marginal effects
+
+#install.packages
+install.packages("margins")
+library(margins)
+margin7a<-margins(model7a)
+summary(margin7a)
+plot(margin7a)
+margin7b<-margins(model7b)
+summary(margin7b)
+plot(margin7b)
+
+
