@@ -259,4 +259,26 @@ margin7b<-margins(model7b)
 summary(margin7b)
 plot(margin7b)
 
+#change demersal to reference group----
+fish_TDL3 <- fish_TDL3 %>% 
+  mutate(DemersPelag = str_replace_all(DemersPelag, "demersal", "ademersal"))
+
+#scale function
+fish_TDL3<-fish_TDL2 %>%
+  mutate(scaled_trophavg=scale(trophavg, center = TRUE))
+fish_TDL3<-fish_TDL3 %>%
+  mutate(scaled_lifespan=scale(lifespan, center = TRUE))
+fish_TDL3<-fish_TDL3 %>%
+  mutate(scaled_year=scale(year, center = TRUE))
+
+PCB3 <- filter(fish_TDL3, grepl("PCB", parameter_name, fixed = TRUE))
+Hg3<-filter(fish_TDL3, grepl("Mercury", parameter_name, fixed = TRUE))
+
+#scaled models
+scale_model7a<-lm(log_value~scaled_trophavg+DemersPelag+scaled_lifespan+scaled_year, data=PCB3, na.action="na.fail")
+scale_model7b<-lm(log_value~scaled_trophavg+DemersPelag+scaled_lifespan+scaled_year, data=Hg3, na.action="na.fail")
+summary(scale_model7a)
+summary(scale_model7b)
+
+
 

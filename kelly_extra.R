@@ -85,8 +85,15 @@ scale_model7b<-lm(log_value~scaled_trophavg+DemersPelag+scaled_lifespan+scaled_y
 summary(scale_model7a)
 summary(scale_model7b)
 
+#change demersal to reference group
+fish_test <- fish_TDL3 %>% 
+  mutate(DemersPelag = str_replace_all(DemersPelag, "demersal", "ademersal"))
 
+PCBtest <- filter(fish_test, grepl("PCB", parameter_name, fixed = TRUE))
+Hgtest<-filter(fish_test, grepl("Mercury", parameter_name, fixed = TRUE))
 
+scale_model7a<-lm(log_value~scaled_trophavg+DemersPelag+scaled_lifespan+scaled_year, data=PCBtest, na.action="na.fail")
+summary(scale_model7a)
 
 #checking model assumptions Hg
 library(performance)
