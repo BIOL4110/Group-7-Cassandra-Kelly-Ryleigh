@@ -220,14 +220,22 @@ fish_TDL2<-fish_TDL2 %>%
 fish_TDL2<- fish_TDL2 %>% 
   rename("year" = "year(sample_date)")
 
+#rename some columns
+fish_TDL2<-fish_TDL2 %>% rename(trophic_level=trophavg)
+fish_TDL2<-fish_TDL2 %>% rename(habitat=DemersPelag)
+
 #year and log in new contaminant sets
 PCB2 <- filter(fish_TDL2, grepl("PCB", parameter_name, fixed = TRUE))
 Hg2<-filter(fish_TDL2, grepl("Mercury", parameter_name, fixed = TRUE))
 
+#change column names for log_value
+PCB2<-PCB2 %>% rename(log_PCB_concentration=log_value)
+Hg2<-Hg2 %>% rename(log_mercury_concentration=log_value)
+
 #model fitting PCB
-model7a<-lm(log_value~trophavg+DemersPelag+lifespan+year, data=PCB2, na.action="na.fail")
+model7a<-lm(log_PCB_concentration~trophic_level+habitat+lifespan+year, data=PCB2, na.action="na.fail")
 #model Hg
-model7b<-lm(log_value~trophavg+DemersPelag+lifespan+year, data=Hg2, na.action="na.fail")
+model7b<-lm(log_mercury_concentration~trophic_level+habitat+lifespan+year, data=Hg2, na.action="na.fail")
 
 #dredge confirm best lm ----
 install.packages("MuMIn")
@@ -260,12 +268,12 @@ summary(margin7b)
 plot(margin7b)
 
 #change demersal to reference group----
-fish_TDL3 <- fish_TDL3 %>% 
-  mutate(DemersPelag = str_replace_all(DemersPelag, "demersal", "ademersal"))
+fish_TDL3 <- fish_TDL2 %>% 
+  mutate(habitat = str_replace_all(habitat, "demersal", "ademersal"))
 
 #scale function
-fish_TDL3<-fish_TDL2 %>%
-  mutate(scaled_trophavg=scale(trophavg, center = TRUE))
+fish_TDL3<-fish_TDL3 %>%
+  mutate(scaled_trophic_level=scale(trophic_level, center = TRUE))
 fish_TDL3<-fish_TDL3 %>%
   mutate(scaled_lifespan=scale(lifespan, center = TRUE))
 fish_TDL3<-fish_TDL3 %>%
@@ -275,10 +283,13 @@ PCB3 <- filter(fish_TDL3, grepl("PCB", parameter_name, fixed = TRUE))
 Hg3<-filter(fish_TDL3, grepl("Mercury", parameter_name, fixed = TRUE))
 
 #scaled models
-scale_model7a<-lm(log_value~scaled_trophavg+DemersPelag+scaled_lifespan+scaled_year, data=PCB3, na.action="na.fail")
-scale_model7b<-lm(log_value~scaled_trophavg+DemersPelag+scaled_lifespan+scaled_year, data=Hg3, na.action="na.fail")
+scale_model7a<-lm(log_value~scaled_trophic_level+habitat+scaled_lifespan+scaled_year, data=PCB3, na.action="na.fail")
+scale_model7b<-lm(log_value~scaled_trophic_level+habitat+scaled_lifespan+scaled_year, data=Hg3, na.action="na.fail")
 summary(scale_model7a)
 summary(scale_model7b)
+
+
+
 
 #visualize models
 install.packages("visreg")
