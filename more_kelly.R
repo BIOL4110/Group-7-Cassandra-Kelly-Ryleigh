@@ -143,3 +143,38 @@ Hg4 %>% ggplot(aes(x=inverselog_value))+
   geom_histogram()
 ##not better
 
+
+
+#log10 transformation
+fish_TDL4<-fish_TDL4 %>% 
+  mutate(log10_value = log10(value))
+
+PCB4 <- filter(fish_TDL4, grepl("PCB", parameter_name, fixed = TRUE))
+Hg4<-filter(fish_TDL4, grepl("Mercury", parameter_name, fixed = TRUE))
+
+
+#visualize data
+PCB4 %>% ggplot(aes(x=log10_value))+
+  geom_histogram()
+Hg4 %>% ggplot(aes(x=log10_value))+
+  geom_histogram()
+##not better
+
+
+#exp transformation
+fish_TDL4<-fish_TDL4 %>% 
+  mutate(exp_value = exp(value))
+
+PCB4 <- filter(fish_TDL4, grepl("PCB", parameter_name, fixed = TRUE))
+Hg4<-filter(fish_TDL4, grepl("Mercury", parameter_name, fixed = TRUE))
+
+
+#visualize data
+PCB4 %>% ggplot(aes(x=exp_value))+
+  geom_histogram()
+Hg4 %>% ggplot(aes(x=exp_value))+
+  geom_histogram()
+##bad
+
+
+
