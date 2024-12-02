@@ -48,7 +48,7 @@ plot(margin7b)
 
 
 
-#inverse transformation
+#inverse transformation----
 fish_TDL4<-fish_TDL3 %>% 
   mutate(inverse_value = 1/(value))
 
@@ -64,7 +64,7 @@ Hg4 %>% ggplot(aes(x=inverse_value))+
 ##both worse than log transformation
 
 
-#root transformation
+#root transformation----
 fish_TDL4<-fish_TDL3 %>% 
   mutate(root_value = sqrt(value))
 
@@ -82,7 +82,7 @@ Hg4 %>% ggplot(aes(x=root_value))+
 install.packages("pracma")
 library(pracma)
 
-#cube root transformation
+#cube root transformation----
 fish_TDL4<-fish_TDL4 %>% 
   mutate(cuberoot_value = nthroot((value),3))
 
@@ -97,7 +97,7 @@ Hg4 %>% ggplot(aes(x=cuberoot_value))+
   geom_histogram()
 ##not better
 
-#fourth root transformation
+#fourth root transformation----
 fish_TDL4<-fish_TDL4 %>% 
   mutate(fourthroot_value = nthroot((value),4))
 
@@ -113,7 +113,7 @@ Hg4 %>% ggplot(aes(x=fourthroot_value))+
 ##not better
 
 
-#3rd inverse transformation
+#3rd inverse transformation----
 fish_TDL4<-fish_TDL4 %>% 
   mutate(thirdinverse_value = 1/((value)^3))
 
@@ -128,7 +128,9 @@ Hg4 %>% ggplot(aes(x=inverse_value))+
   geom_histogram()
 ##not better
 
-#inverse log transformation
+
+
+#inverse log transformation----
 fish_TDL4<-fish_TDL4 %>% 
   mutate(inverselog_value = 1/log(value))
 
@@ -145,7 +147,7 @@ Hg4 %>% ggplot(aes(x=inverselog_value))+
 
 
 
-#log10 transformation
+#log10 transformation----
 fish_TDL4<-fish_TDL4 %>% 
   mutate(log10_value = log10(value))
 
@@ -161,7 +163,7 @@ Hg4 %>% ggplot(aes(x=log10_value))+
 ##not better
 
 
-#exp transformation
+#exp transformation----
 fish_TDL4<-fish_TDL4 %>% 
   mutate(exp_value = exp(value))
 
