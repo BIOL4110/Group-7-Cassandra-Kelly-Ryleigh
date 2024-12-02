@@ -48,3 +48,98 @@ plot(margin7b)
 
 
 
+#inverse transformation
+fish_TDL4<-fish_TDL3 %>% 
+  mutate(inverse_value = 1/(value))
+
+PCB4 <- filter(fish_TDL4, grepl("PCB", parameter_name, fixed = TRUE))
+Hg4<-filter(fish_TDL4, grepl("Mercury", parameter_name, fixed = TRUE))
+
+
+#visualize data
+PCB4 %>% ggplot(aes(x=inverse_value))+
+  geom_histogram()
+Hg4 %>% ggplot(aes(x=inverse_value))+
+  geom_histogram()
+##both worse than log transformation
+
+
+#root transformation
+fish_TDL4<-fish_TDL3 %>% 
+  mutate(root_value = sqrt(value))
+
+PCB4 <- filter(fish_TDL4, grepl("PCB", parameter_name, fixed = TRUE))
+Hg4<-filter(fish_TDL4, grepl("Mercury", parameter_name, fixed = TRUE))
+
+
+#visualize data
+PCB4 %>% ggplot(aes(x=root_value))+
+  geom_histogram()
+Hg4 %>% ggplot(aes(x=root_value))+
+  geom_histogram()
+##both worse than log transformation
+
+install.packages("pracma")
+library(pracma)
+
+#cube root transformation
+fish_TDL4<-fish_TDL4 %>% 
+  mutate(cuberoot_value = nthroot((value),3))
+
+PCB4 <- filter(fish_TDL4, grepl("PCB", parameter_name, fixed = TRUE))
+Hg4<-filter(fish_TDL4, grepl("Mercury", parameter_name, fixed = TRUE))
+
+
+#visualize data
+PCB4 %>% ggplot(aes(x=cuberoot_value))+
+  geom_histogram()
+Hg4 %>% ggplot(aes(x=cuberoot_value))+
+  geom_histogram()
+##not better
+
+#fourth root transformation
+fish_TDL4<-fish_TDL4 %>% 
+  mutate(fourthroot_value = nthroot((value),4))
+
+PCB4 <- filter(fish_TDL4, grepl("PCB", parameter_name, fixed = TRUE))
+Hg4<-filter(fish_TDL4, grepl("Mercury", parameter_name, fixed = TRUE))
+
+
+#visualize data
+PCB4 %>% ggplot(aes(x=fourthroot_value))+
+  geom_histogram()
+Hg4 %>% ggplot(aes(x=fourthroot_value))+
+  geom_histogram()
+##not better
+
+
+#3rd inverse transformation
+fish_TDL4<-fish_TDL4 %>% 
+  mutate(thirdinverse_value = 1/((value)^3))
+
+PCB4 <- filter(fish_TDL4, grepl("PCB", parameter_name, fixed = TRUE))
+Hg4<-filter(fish_TDL4, grepl("Mercury", parameter_name, fixed = TRUE))
+
+
+#visualize data
+PCB4 %>% ggplot(aes(x=inverse_value))+
+  geom_histogram()
+Hg4 %>% ggplot(aes(x=inverse_value))+
+  geom_histogram()
+##not better
+
+#inverse log transformation
+fish_TDL4<-fish_TDL4 %>% 
+  mutate(inverselog_value = 1/log(value))
+
+PCB4 <- filter(fish_TDL4, grepl("PCB", parameter_name, fixed = TRUE))
+Hg4<-filter(fish_TDL4, grepl("Mercury", parameter_name, fixed = TRUE))
+
+
+#visualize data
+PCB4 %>% ggplot(aes(x=inverselog_value))+
+  geom_histogram()
+Hg4 %>% ggplot(aes(x=inverselog_value))+
+  geom_histogram()
+##not better
+
