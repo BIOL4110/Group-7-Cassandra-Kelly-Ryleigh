@@ -198,12 +198,18 @@ visreg(model7b, gg=T)[[1]]+
 library(ggplot2)
 
 #lm with species and latitude
-model7a<-lm(log_PCB_concentration~trophic_level+habitat+lifespan+year, data=PCB2, na.action="na.fail")
-model7b<-lm(log_mercury_concentration~trophic_level+habitat+lifespan+year, data=Hg2, na.action="na.fail")
-
-
+model8a<-lm(log_PCB_concentration~trophic_level+habitat+lifespan+year+FBname+latitude_ddmmss, data=PCB2, na.action="na.fail")
+model8b<-lm(log_mercury_concentration~trophic_level+habitat+lifespan+year+FBname+latitude_ddmmss, data=Hg2, na.action="na.fail")
+#dredge 'em
+dredge(model8a)
+dredge(model8b)
 
 #lm with species and location
+model9a<-lm(log_PCB_concentration~trophic_level+habitat+lifespan+year+FBname+location_name, data=PCB2, na.action="na.fail")
+model9b<-lm(log_mercury_concentration~trophic_level+habitat+lifespan+year+FBname+location_name, data=Hg2, na.action="na.fail")
+#dredge 'em
+dredge(model9a)
+dredge(model9b)
 
 
 
