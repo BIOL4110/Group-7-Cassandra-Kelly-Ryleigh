@@ -178,5 +178,12 @@ Hg4 %>% ggplot(aes(x=exp_value))+
   geom_histogram()
 ##bad
 
+#model fitting Hg
+model7b<-lm(log_mercury_concentration~trophic_level+habitat+lifespan+year, data=Hg2, na.action="na.fail")
+#dredge
+ms1<-dredge(model7b)
+#average of top 2 models
+summary(model.avg(ms1,subset=delta<4))
+
 
 

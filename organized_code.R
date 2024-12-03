@@ -169,19 +169,6 @@ species_2<-fb_tbl("species")
 depth<-species_2 %>% select("SpecCode","DemersPelag")
 depth<-depth %>% rename(Speccode=SpecCode)
 
-##REMOVE?----
-depth_rank <- depth %>%
-  mutate(Rank = case_when(
-    DemersPelag == "benthopelagic" ~ 4,
-    DemersPelag == "pelagic-neritic" ~ 3,
-    DemersPelag == "reef-associated" ~ 5,
-    DemersPelag == "demersal" ~ 6,
-    DemersPelag == "pelagic-oceanic" ~ 1,
-    DemersPelag == "pelagic" ~ 2,
-    TRUE ~ NA_real_  ))
-
-fish_T_D<-merge(fish_troph,depth_rank, by="Speccode")
-
 
 #age max----
 popchar<-fb_tbl("popchar")
