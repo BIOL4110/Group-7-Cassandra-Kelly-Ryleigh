@@ -2,13 +2,8 @@
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-install.packages("tidyverse")
-install.packages("ggplot2")
-install.packages("rfishbase")
 library(rfishbase)
-install.packages("lubridate")
 library(lubridate)
-install.packages("janitor")
 library(janitor)
 library(readxl)
 
@@ -38,24 +33,24 @@ Fish_Contaminant_Data_2005_2018$REMARK1<-NULL
 Fish_Contaminant_Data_2005_2018$REMARK_CODE<-NULL
 
 #cleaning up and making dates = dates----
-Fish_Contaminant_1 <- Fish_Contaminant_Data_1993_1998 %>% 
+Fish_Contaminant_Data_1993_1998 <- Fish_Contaminant_Data_1993_1998 %>% 
   clean_names() %>% 
   mutate(sample_date = ymd(sample_date))
 
-Fish_Contaminant_2 <- Fish_Contaminant_Data_1999_2001 %>% 
+Fish_Contaminant_Data_1999_2001 <- Fish_Contaminant_Data_1999_2001 %>% 
   clean_names() %>% 
   mutate(sample_date = ymd(sample_date))
 
-Fish_Contaminant_3 <- Fish_Contaminant_Data_2002_2004 %>% 
+Fish_Contaminant_Data_2002_2004 <- Fish_Contaminant_Data_2002_2004 %>% 
   clean_names() %>% 
   mutate(sample_date = ymd(sample_date))
 
-Fish_Contaminant_4 <- Fish_Contaminant_Data_2005_2018 %>% 
+Fish_Contaminant_Data_2005_2018 <- Fish_Contaminant_Data_2005_2018 %>% 
   clean_names() %>% 
   mutate(sample_date = dmy(sample_date))
 
 #combine datasets----
-fish_1993_2018<-rbind(Fish_Contaminant_1,Fish_Contaminant_2,Fish_Contaminant_3,Fish_Contaminant_4)
+fish_1993_2018<-rbind(Fish_Contaminant_Data_1993_1998,Fish_Contaminant_Data_1999_2001,Fish_Contaminant_Data_2002_2004,Fish_Contaminant_Data_2005_2018)
 
 #remove unnecessary columns and NAs
 fish_1993_2018$waterbody_code<-NULL
@@ -67,15 +62,6 @@ fish_1993_2018$portion_type_code<-NULL
 fish_1993_2018$test_code<-NULL
 
 fish_1993_2018<-na.omit(fish_1993_2018)
-
-#REMOVE? adding in North South designation----
-North <- filter(fish_1993_2018, latitude_ddmmss>=490000)
-South <- filter(fish_1993_2018, latitude_ddmmss<490000)
-North<-add_column(North, ontario="North")
-South<-add_column(South, ontario="South")
-
-#adding North South column into combined dataset
-fish_1993_2018<-rbind(North, South)
 
 #keep only Hg and PCB data----
 PCB <- filter(fish_1993_2018, grepl("chlorobiphenyl", parameter_name, fixed = TRUE) | 
@@ -185,7 +171,6 @@ fish_TDL<-merge(fish_T_D,popchar3,by="Speccode")
 #removing more unnecessary columns
 fish_TDL$submission_no<-NULL
 fish_TDL$species_code<-NULL
-fish_TDL$TrophicAverage<-NULL
 
 #adding trophic average, trophic level, depth, and lifespan to Hg and PCB----
 PCB <- filter(fish_TDL, grepl("PCB", parameter_name, fixed = TRUE))
@@ -231,28 +216,28 @@ dredge(model7a)
 dredge(model7b)
 
 #checking model assumptions Hg
-install.packages("performance")
-library(performance)
-check_model(model7b)
-plot(model7b)
-summary(model7b)
+#install.packages("performance")
+#library(performance)
+#check_model(model7b)
+#plot(model7b)
+#summary(model7b)
 
 #checking model assumptions PCB
-check_model(model7a)
-plot(model7a)
-summary(model7a)
+#check_model(model7a)
+#plot(model7a)
+#summary(model7a)
 
 ##Marginal effects
 
 #install.packages
-install.packages("margins")
-library(margins)
-margin7a<-margins(model7a)
-summary(margin7a)
-plot(margin7a)
-margin7b<-margins(model7b)
-summary(margin7b)
-plot(margin7b)
+#install.packages("margins")
+#library(margins)
+#margin7a<-margins(model7a)
+#summary(margin7a)
+#plot(margin7a)
+#margin7b<-margins(model7b)
+#summary(margin7b)
+#plot(margin7b)
 
 #change demersal to reference group----
 fish_TDL3 <- fish_TDL2 %>% 

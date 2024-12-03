@@ -1,3 +1,12 @@
+#REMOVE? adding in North South designation----
+North <- filter(fish_1993_2018, latitude_ddmmss>=490000)
+South <- filter(fish_1993_2018, latitude_ddmmss<490000)
+North<-add_column(North, ontario="North")
+South<-add_column(South, ontario="South")
+
+#adding North South column into combined dataset
+fish_1993_2018<-rbind(North, South)
+
 #redo trophic position by Speccode
 trophic_2 <- trophic_1 %>%
   group_by(Speccode) %>%
