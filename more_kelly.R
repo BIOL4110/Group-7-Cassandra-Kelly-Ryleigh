@@ -184,6 +184,9 @@ model7b<-lm(log_mercury_concentration~trophic_level+habitat+lifespan+year, data=
 ms1<-dredge(model7b)
 #average of top 2 models
 summary(model.avg(ms1,subset=delta<4))
+model7b_avg<-model.avg(ms1,subset=delta<4)
 
-
+#visualize averaged model
+visreg(model7b_avg)
+##error: object 'log_mercury_concentration' not found
 
