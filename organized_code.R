@@ -168,7 +168,7 @@ fish_troph<-merge(fish_genus,trophic_2,by="Speccode")
 species_2<-fb_tbl("species")
 depth<-species_2 %>% select("SpecCode","DemersPelag")
 depth<-depth %>% rename(Speccode=SpecCode)
-
+fish_T_D<-merge(fish_troph,depth,by="Speccode")
 
 #age max----
 popchar<-fb_tbl("popchar")
@@ -283,4 +283,6 @@ install.packages("visreg")
 library(visreg)
 visreg(model7a)
 visreg(model7b)
+
+
 

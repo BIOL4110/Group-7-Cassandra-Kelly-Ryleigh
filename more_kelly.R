@@ -191,5 +191,19 @@ model7b_avg<-model.avg(ms1,subset=delta<4)
 visreg(model7b_avg)
 ##error: object 'log_mercury_concentration' not found
 
+visreg(model7b, gg=T)[[1]]+
+  labs(y="Mercury")
+
+
+library(ggplot2)
+
+#lm with species and latitude
+model7a<-lm(log_PCB_concentration~trophic_level+habitat+lifespan+year, data=PCB2, na.action="na.fail")
+model7b<-lm(log_mercury_concentration~trophic_level+habitat+lifespan+year, data=Hg2, na.action="na.fail")
+
+
+
+#lm with species and location
+
 
 
