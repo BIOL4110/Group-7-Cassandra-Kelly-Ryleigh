@@ -96,6 +96,15 @@ fish_Hg_PCB<-fish_Hg_PCB %>% rename(FBname=species_name)
 #make common names lower case
 fish_Hg_PCB$FBname<-tolower(fish_Hg_PCB$FBname)
 
+##contaminants fish list
+#"white sucker","yellow perch","lake whitefish","northern pike","walleye","burbot (ling)","lake trout","sucker family","smallmouth bass","sauger","mooneye","brook trout","sturgeon","cisco (lake herring)","black crappie","longnose sucker","blackfin cisco","shortjaw cisco","channel catfish","freshwater drum","white bass","coho salmon","rainbow trout","brown bullhead","common carp","largemouth bass","white perch","brown trout","chinook salmon","common shiner","bigmouth buffalo","rock bass","round whitefish","american eel","rainbow smelt","redhorse sucker","bluegill","pumpkinseed","white crappie","goldfish","siscowet","humper (banker) lake trout","atlantic salmon","pink salmon","bloater","bowfin","chub (not c. artedii)","splake","muskellunge","salmon hybrid","aurora trout","whitefish hybrid","gizzard shad","shorthead redhorse","silver redhorse","goldeye","fallfish","golden redhorse sucker","spotted sucker","golden shiner"
+##missing fish once combined with FBtrophic levels
+#"white sucker",______________,"lake whitefish","northern pike","walleye",_______________,"lake trout",_______________,"smallmouth bass","sauger","mooneye","brook trout","sturgeon",______________________,"black crappie","longnose sucker","blackfin cisco","shortjaw cisco","channel catfish",_________________,"white bass","coho salmon","rainbow trout","brown bullhead","common carp",_________________,"white perch",_____________,"chinook salmon","common shiner",__________________,"rock bass","round whitefish","american eel","rainbow smelt",_________________,"bluegill","pumpkinseed","white crappie","goldfish",__________,____________________________,"atlantic salmon","pink salmon","bloater",________,_______________________,________,"muskellunge",_______________,______________,__________________,______________,____________________,_________________,"goldeye","fallfish",________________________,________________,"golden shiner"  
+##problems
+#"sucker family","cisco (lake herring)","freshwater drum","bigmouth buffalo","redhorse sucker","chub (not c. artedii)","splake","salmon hybrid","whitefish hybrid","gizzard shad","shorthead redhorse","silver redhorse","golden redhorse sucker","spotted sucker"
+##names to be fixed
+#"yellow perch","burbot (ling)","largemouth bass","brown trout","siscowet","humper (banker) lake trout","bowfin","aurora trout"
+
 #rename "wild-caught" data common names----
 fish_Hg_PCB <- fish_Hg_PCB %>% 
   mutate(FBname = str_replace_all(FBname, "yellow perch", "american yellow perch"))
@@ -260,14 +269,62 @@ scale_model7b<-lm(log_value~scaled_trophic_level+habitat+scaled_lifespan+scaled_
 summary(scale_model7a)
 summary(scale_model7b)
 
-
-
-
-#visualize models
+#visualize models----
 install.packages("visreg")
 library(visreg)
 visreg(model7a)
 visreg(model7b)
+
+#better visreg graphs with border Hg
+visreg(model7b, gg=T)[[1]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Trophic Level")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7b, gg=T, points=T)[[2]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Habitat")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7b, gg=T)[[3]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Lifespan (years)")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7b, gg=T)[[4]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Year Sampled")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())+
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5))
+
+
+#better visreg graphs with border PCB
+visreg(model7a, gg=T)[[1]]+
+  labs(y="Log of PCB Concentration (ng/g wet)", x="Trophic Level")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7a, gg=T, points=T)[[2]]+
+  labs(y="Log of PCB Concentration (ng/g wet)", x="Habitat")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7a, gg=T)[[3]]+
+  labs(y="Log of PCB Concentration (ng/g wet)", x="Lifespan (years)")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7a, gg=T)[[4]]+
+  labs(y="Log of PCB Concentration (ng/g wet)", x="Year Sampled")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())+
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5))
 
 
 

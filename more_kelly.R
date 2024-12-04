@@ -191,9 +191,6 @@ model7b_avg<-model.avg(ms1,subset=delta<4)
 visreg(model7b_avg)
 ##error: object 'log_mercury_concentration' not found
 
-visreg(model7b, gg=T)[[1]]+
-  labs(y="Mercury")
-
 
 library(ggplot2)
 
@@ -210,6 +207,83 @@ model9b<-lm(log_mercury_concentration~trophic_level+habitat+lifespan+year+FBname
 #dredge 'em
 dredge(model9a)
 dredge(model9b)
+##long drawn-out non-sense
 
 
+#better visreg graphs without border
+visreg(model7b, gg=T)[[1]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Trophic Level")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.border = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+visreg(model7b, gg=T, points=T)[[2]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Habitat")+
+  theme_bw()+
+  theme(panel.border = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+visreg(model7b, gg=T)[[3]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Lifespan (years)")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.border = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+visreg(model7b, gg=T)[[4]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Year Sampled")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.border = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))+
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5))
+
+
+#better visreg graphs with border Hg
+visreg(model7b, gg=T)[[1]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Trophic Level")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7b, gg=T, points=T)[[2]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Habitat")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7b, gg=T)[[3]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Lifespan (years)")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7b, gg=T)[[4]]+
+  labs(y="Log of Mercury Concentration (ug/g wet)", x="Year Sampled")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())+
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5))
+
+
+#better visreg graphs with border PCB
+visreg(model7a, gg=T)[[1]]+
+  labs(y="Log of PCB Concentration (ng/g wet)", x="Trophic Level")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7a, gg=T, points=T)[[2]]+
+  labs(y="Log of PCB Concentration (ng/g wet)", x="Habitat")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7a, gg=T)[[3]]+
+  labs(y="Log of PCB Concentration (ng/g wet)", x="Lifespan (years)")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+visreg(model7a, gg=T)[[4]]+
+  labs(y="Log of PCB Concentration (ng/g wet)", x="Year Sampled")+
+  geom_point(alpha=0.1)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())+
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5))
 
