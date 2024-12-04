@@ -276,55 +276,57 @@ visreg(model7a)
 visreg(model7b)
 
 #better visreg graphs with border Hg
-visreg(model7b, gg=T)[[1]]+
+Hg_graph1<-visreg(model7b, gg=T)[[1]]+
   labs(y="Log of Mercury Concentration (ug/g wet)", x="Trophic Level")+
-  geom_point(alpha=0.1)+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 
-visreg(model7b, gg=T, points=T)[[2]]+
+Hg_graph2<-visreg(model7b, gg=T, points=T)[[2]]+
   labs(y="Log of Mercury Concentration (ug/g wet)", x="Habitat")+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 
-visreg(model7b, gg=T)[[3]]+
+Hg_graph3<-visreg(model7b, gg=T)[[3]]+
   labs(y="Log of Mercury Concentration (ug/g wet)", x="Lifespan (years)")+
-  geom_point(alpha=0.1)+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 
-visreg(model7b, gg=T)[[4]]+
+Hg_graph4<-visreg(model7b, gg=T)[[4]]+
   labs(y="Log of Mercury Concentration (ug/g wet)", x="Year Sampled")+
-  geom_point(alpha=0.1)+
   theme_bw()+
   theme(panel.grid.minor = element_blank())+
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5))
 
 
 #better visreg graphs with border PCB
-visreg(model7a, gg=T)[[1]]+
+PCB_graph1<-visreg(model7a, gg=T)[[1]]+
   labs(y="Log of PCB Concentration (ng/g wet)", x="Trophic Level")+
-  geom_point(alpha=0.1)+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 
-visreg(model7a, gg=T, points=T)[[2]]+
+PCB_graph2<-visreg(model7a, gg=T, points=T)[[2]]+
   labs(y="Log of PCB Concentration (ng/g wet)", x="Habitat")+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 
-visreg(model7a, gg=T)[[3]]+
+PCB_graph3<-visreg(model7a, gg=T)[[3]]+
   labs(y="Log of PCB Concentration (ng/g wet)", x="Lifespan (years)")+
-  geom_point(alpha=0.1)+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 
-visreg(model7a, gg=T)[[4]]+
+PCB_graph4<-visreg(model7a, gg=T)[[4]]+
   labs(y="Log of PCB Concentration (ng/g wet)", x="Year Sampled")+
-  geom_point(alpha=0.1)+
   theme_bw()+
   theme(panel.grid.minor = element_blank())+
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5))
+
+#pair graphs in panel
+library(gridExtra)
+
+grid.arrange(Hg_graph1,PCB_graph1, nrow=1)
+grid.arrange(Hg_graph2,PCB_graph2, nrow=1)
+grid.arrange(Hg_graph3,PCB_graph3, nrow=1)
+grid.arrange(Hg_graph4,PCB_graph4, nrow=1)
 
 
 
