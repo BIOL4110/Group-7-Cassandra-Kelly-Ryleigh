@@ -328,5 +328,38 @@ grid.arrange(Hg_graph2,PCB_graph2, nrow=1)
 grid.arrange(Hg_graph3,PCB_graph3, nrow=1)
 grid.arrange(Hg_graph4,PCB_graph4, nrow=1)
 
+#get unlogged values for slope
+#PCB
+#year
+exp(1.67130)
+#lifespan
+exp(-0.16724)
+#trophic level
+exp(0.10658)
+#benthopelag
+exp(0.03858)
+#pelag
+exp(-0.56732)
+#pelag-neritic
+exp(1.17833)
+#pelag-oceanic
+exp(0.89299)
+
+#Hg
+#year
+exp(0.138256)
+#lifespan
+exp(-0.004027)
+#trophic
+exp(0.435831)
+#bentho
+exp(0.536542)
+#pelag
+exp(0.694841)
+#pelag-neritic
+exp(0.043402)
+#pelag-oceanic
+exp(-0.842412)
+
 
 
