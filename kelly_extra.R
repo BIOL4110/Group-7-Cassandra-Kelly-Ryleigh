@@ -261,5 +261,9 @@ GreatLakes_PCB %>% ggplot(aes(TrophicAverage,value))+
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 
-
+demersal <- filter(Hg3, grepl("ademersal", habitat, fixed = TRUE))
+bentho <- filter(Hg3, grepl("benthopelagic", habitat, fixed = TRUE))
+pelag <- filter(Hg3, grepl("pelagic", habitat, fixed = TRUE))
+neritic <- filter(Hg3, grepl("pelagic-neritic", habitat, fixed = TRUE))
+oceanic <- filter(Hg3, grepl("pelagic-oceanic", habitat, fixed = TRUE))
 

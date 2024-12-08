@@ -158,12 +158,11 @@ fish_genus<-merge(fish_Hg_PCB,species_1,by="FBname")
 #add trophavg to contaminant data
 fish_troph<-merge(fish_genus,trophic_2,by="Speccode")
 
-
-#fishbase get depth info----
+#fishbase get habitat info----
 species_2<-fb_tbl("species")
-depth<-species_2 %>% select("SpecCode","DemersPelag")
-depth<-depth %>% rename(Speccode=SpecCode)
-fish_T_D<-merge(fish_troph,depth,by="Speccode")
+species_2<-species_2 %>% select("SpecCode","DemersPelag")
+species_2<-species_2 %>% rename(Speccode=SpecCode)
+fish_T_D<-merge(fish_troph,species_2,by="Speccode")
 
 #age max----
 popchar<-fb_tbl("popchar")
@@ -260,6 +259,7 @@ fish_TDL3<-fish_TDL3 %>%
 fish_TDL3<-fish_TDL3 %>%
   mutate(scaled_year=scale(year, center = TRUE))
 
+#scaled values in contaminant datasets
 PCB3 <- filter(fish_TDL3, grepl("PCB", parameter_name, fixed = TRUE))
 Hg3<-filter(fish_TDL3, grepl("Mercury", parameter_name, fixed = TRUE))
 
