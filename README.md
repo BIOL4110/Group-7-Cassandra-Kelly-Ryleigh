@@ -1,5 +1,5 @@
 # Group-7
-Group 7: Mercury and PCB in Fish.
+Mercury and PCB in Fish.
 =======
 
 
