@@ -2,7 +2,7 @@
 Mercury and PCB in Fish
 =======
 
-Our final paper is [here!]()
+Our final paper is [here!](https://github.com/BIOL4110/Group-7-Cassandra-Kelly-Ryleigh/blob/main/BIOL%204110%20Final%20Paper.pdf)
 
 And [here](https://github.com/BIOL4110/Group-7-Cassandra-Kelly-Ryleigh/blob/main/organized_code.R) is our organized code!
 
